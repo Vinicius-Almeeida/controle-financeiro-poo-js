@@ -41,7 +41,7 @@ function atualizarInterface() {
     // Atualiza a lista de lançamentos
     listaLancamentos.inneHTML = "";
 
-    const todos = [...controle.listarReceitas(), ...controle.listarDespesas()];
+    const todos = [controle.listarReceitas(), controle.listarDespesas()];
 
     todos.forEach(lanc => {
         const item = document.createElement('li');
