@@ -39,13 +39,13 @@ function atualizarInterface() {
 
     saldoSpan.textContent = `R$ ${controle.calcularSaldo().toFixed(2)}`;
     // Atualiza a lista de lançamentos
-    listaLancamentos.inneHTML = "";
+    listaLancamentos.innerHTML = "";
 
-    const todos = [controle.listarReceitas(), controle.listarDespesas()];
+    const todos = [...controle.listarReceitas(),...controle.listarDespesas()];
 
     todos.forEach(lanc => {
         const item = document.createElement('li');
-        item.textContent = `${lanc.data} | ${lanc.tipo.toUpperCase()} | R$ ${lanc.valor} | ${lanc.descricao}`;
+        item.textContent = `${lanc.data} | ${lanc.tipo?.toUpperCase()} | R$ ${lanc.valor} | ${lanc.descricao}`;
         listaLancamentos.appendChild(item);
     })
 };
