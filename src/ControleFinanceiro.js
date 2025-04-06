@@ -34,13 +34,8 @@ export class ControleFinanceiro {
 
     }
 
-     // Usa filter() no array #lancamentos
-     // Retorna apenas os objetos onde lancamento.tipo === 'receita'
-    listarReceitas() {
-        return this.#lancamentos.filter(lanc => lanc.tipo === 'receita');
-    }
-
-    listarDespesas() {
-        return this.#lancamentos.filter(lanc => lanc.tipo === 'despesa');
-    }
+    listarLancamentos() {
+        return this.#lancamentos;
+    };
 };
+
