@@ -1,5 +1,5 @@
-import { Lancamento } from "./Lancamento";
-import { ControleFinanceiro } from "./ControleFinanceiro";
+import { Lancamento } from "./classes/Lancamento";
+import { ControleFinanceiro } from "./classes/ControleFinanceiro";
 
 console.log("JS funcionando!");
 
