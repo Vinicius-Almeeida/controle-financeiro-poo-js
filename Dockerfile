@@ -1,20 +1,13 @@
-FROM node:22.4.0-alpine AS build
-
+# Etapa 1: Build com Node
+FROM node:22.14.0-alpine AS build
 WORKDIR /app
-
-COPY package*.json ./
+COPY ./frontend/package*.json ./
 RUN npm install
-
-COPY . .
-
+COPY ./frontend .
 RUN npm run build
 
-# Etapa 2: servidor leve para servir os arquivos
-
+# Etapa 2: Servir com NGINX
 FROM nginx:alpine
-
 COPY --from=build /app/dist /usr/share/nginx/html
-
 EXPOSE 80
-
-CMD [ "nginx", "-g", "daemon off;"]
+CMD ["nginx", "-g", "daemon off;"]

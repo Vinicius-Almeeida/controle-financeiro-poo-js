@@ -1,41 +1,46 @@
-/* Reset e base */
-
+/* Reset básico */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* Corpo da página */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f8f9fa;
+  background-color: #f4f6f9;
   color: #333;
   padding: 2rem;
 }
 
+/* Container central */
 .container {
   max-width: 800px;
-  margin: 0, auto;
+  margin: 0 auto;
 }
 
-/* Header */
+/* Cabeçalho */
+header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
 
 header h1 {
+  font-size: 2.5rem;
   color: #2c3e50;
-  font-size: 2rem;
 }
 
 #saldo {
   font-weight: bold;
   color: #27ae60;
+  font-size: 1.2rem;
 }
 
 /* Formulário */
-
 .formulario {
-  background-color: #fff;
+  background-color: #ffffff;
   padding: 1.5rem;
-  border-radius: 10px;
+  border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   margin-bottom: 2rem;
 }
@@ -51,50 +56,57 @@ form {
   gap: 1rem;
 }
 
-input, 
+input,
 select {
-padding: 0.6rem;
-border: 1px solid #ccc;
-border-radius: 5px;
-font-size: 1rem;
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
 }
 
 button {
   background-color: #27ae60;
-  color: #fff;
+  color: white;
   padding: 0.7rem;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background 2.3s ease;
+  transition: background 0.3s ease;
 }
 
 button:hover {
   background-color: #219150;
 }
 
-.receita td {
-  color: #2ecc71;
-  font-weight: bold;
+/* Tabela */
+.lancamentos table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
 }
 
-.despesa td {
-  color: #e74c3c;
-  font-weight: bold;
+.lancamentos th,
+.lancamentos td {
+  padding: 0.8rem;
+  border-bottom: 1px solid #ccc;
+  text-align: left;
 }
 
-/* Responsividade */
+.receita {
+  background-color: #e8f5e9;
+}
 
+.despesa {
+  background-color: #ffebee;
+}
+
+/* Responsivo */
 @media (max-width: 600px) {
-  .formulario {
-    padding: 1rem;
-  }
-
   body {
     padding: 1rem;
   }
 
   header h1 {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
   }
 }
