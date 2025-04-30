@@ -3,15 +3,13 @@ import { ControleFinanceiro } from "./classes/ControleFinanceiro.js";
 
 const controle = new ControleFinanceiro();
 
-// Referências aos elementos do DOM
 const formulario = document.getElementById('formulario');
 const saldoSpan = document.getElementById('saldo');
 const listaLancamentos = document.getElementById('lista-lancamentos');
+const inputValor = document.getElementById('valor');
 
-// Atualiza o saldo total (iremos calcular depois de buscar todos os lançamentos)
 let saldo = 0;
 
-// Função utilitária para formatar moeda
 function formatarMoeda(valor) {
   return valor.toLocaleString('pt-br', {
     style: 'currency',
@@ -19,11 +17,11 @@ function formatarMoeda(valor) {
   });
 }
 
-// Função para buscar lançamentos do backend
 async function buscarLancamentos() {
   try {
     const resposta = await fetch('http://127.0.0.1:5000/lancamentos');
-    const lancamentos = await resposta.json();
+    const resultado = await resposta.json();
+    const lancamentos = resultado.dados;
 
     saldo = 0; // reset no saldo
     listaLancamentos.innerHTML = ""; // limpa a lista
@@ -40,15 +38,15 @@ async function buscarLancamentos() {
   }
 }
 
-// Função para adicionar o lançamento na tabela
+// Adicionar o lançamento na tabela
 function adicionarLancamentoNaTela(lancamento) {
     const linha = document.createElement('tr');
     linha.classList.add(lancamento.tipo === 'receita' ? 'receita' : 'despesa');
     linha.innerHTML = `
-      <td> ${lancamento.data} </>
-      <td> ${lancamento.tipo.toUpperCase()} </>
-      <td> ${formatarMoeda(lancamento.valor)} </>
-      <td> ${lancamento.descricao} </>
+      <td> ${lancamento.data} </td>
+      <td> ${lancamento.tipo.toUpperCase()} </td>
+      <td> ${formatarMoeda(lancamento.valor)} </td>
+      <td> ${lancamento.descricao} </td>
     `;
     listaLancamentos.appendChild(linha);
 }
@@ -59,9 +57,13 @@ formulario.addEventListener('submit', async function (event) {
 
     const data = document.getElementById('data').value;
     const tipo = document.getElementById('tipo').value;
-    const valor = parseFloat(document.getElementById('valor').value);
+    const valorInput = document.getElementById('valor').value;
     const descricao = document.getElementById('descricao').value;
 
+    const valor = parseFloat(
+      valorInput.replace(/[^\d,]/g, '').replace(',', '.')
+    );
+    
     if(!data || !tipo || isNaN(valor) || !descricao) {
       alert("Preencha todos os campos corretamente");
       return;
@@ -79,14 +81,18 @@ formulario.addEventListener('submit', async function (event) {
       });
 
       if(resposta.ok) {
+        alert("Lançamento adicionado com sucesso");
+        formulario.reset();
+        buscarLancamentos();
+            } else {
         const erro = await resposta.json();
         alert(`Erro: ${erro.mensagem || "Erro desconhecido"}`);
       }
-      
+
     } catch (erro) {
         console.error('Erro ao adicionar lançamento', erro);
         alert("Erro ao adicionar lançamento.");
-    }
+      }
 });
 
 // Inicializa buscando lançamentos na primeira carga

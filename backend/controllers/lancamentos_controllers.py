@@ -6,16 +6,21 @@ def listar_lancamentos():
     lancamentos = conn.execute('SELECT * FROM lancamentos').fetchall()
     conn.close()
 
-    lancamentos_list = []
-    for lanc in lancamentos:
-        lancamentos_list.append({
-            'id': lanc['id'],
-            'data': lanc['data'],
-            'tipo': lanc['tipo'],
-            'valor': lanc['valor'],
-            'descricao': lanc['descricao']
-        })
-    return jsonify(lancamentos_list)
+    lancamentos_formatados = [
+        {
+            'id': lancamento['id'],
+            'data': lancamento['data'],
+            'tipo': lancamento['tipo'],
+            'valor': lancamento['valor'],
+            'descricao': lancamento['descricao']
+        }
+        for lancamento in lancamentos
+    ]
+
+    return jsonify({
+        'status': 'sucesso',
+        'dados': lancamentos_formatados
+    }), 200
 
 def criar_lancamento():
     dados = request.get_json()
